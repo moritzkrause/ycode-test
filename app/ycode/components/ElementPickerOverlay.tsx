@@ -185,8 +185,8 @@ export default function ElementPickerOverlay({ iframeElement, zoom }: ElementPic
   const cp2y = endY - curveOffset;
   const pathD = `M ${origin.x} ${origin.y} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
 
-  const highlightColor = hoveredElement?.isValid ? '#22c55e' : '#22c55e';
-  const highlightFill = hoveredElement?.isValid ? 'rgba(34, 197, 94, 0.1)' : 'rgba(34, 197, 94, 0.06)';
+  const highlightColor = hoveredElement?.isValid ? '#2dd4bf' : '#2dd4bf';
+  const highlightFill = hoveredElement?.isValid ? 'rgba(45, 212, 191, 0.1)' : 'rgba(45, 212, 191, 0.1)';
 
   return (
     <svg
@@ -198,7 +198,7 @@ export default function ElementPickerOverlay({ iframeElement, zoom }: ElementPic
       <path
         d={pathD}
         fill="none"
-        stroke="#22c55e"
+        stroke="#2dd4bf"
         strokeWidth={1.25}
         strokeLinecap="round"
       />
@@ -206,25 +206,22 @@ export default function ElementPickerOverlay({ iframeElement, zoom }: ElementPic
       {/* Origin dot */}
       <circle
         cx={origin.x} cy={origin.y}
-        r={5} fill="#22c55e"
+        r={5} fill="#2dd4bf"
       />
 
-      {/* Crosshair icon at mouse or hovered element center */}
-      <g transform={`translate(${endX}, ${endY})`}>
-        <circle
-          r={8} fill="none"
-          stroke="#22c55e" strokeWidth={1.5}
-        />
-        <line
-          x1={0} y1={-12}
-          x2={0} y2={12}
-          stroke="#22c55e" strokeWidth={1.5}
-        />
-        <line
-          x1={-12} y1={0}
-          x2={12} y2={0}
-          stroke="#22c55e" strokeWidth={1.5}
-        />
+      {/* Crosshair icon at end of line */}
+      <g transform={`translate(${endX - 8}, ${endY - 8})`}>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 12 12"
+          fill="currentColor"
+        >
+          <path
+            d="M6.455 1v1.026a4.002 4.002 0 013.52 3.52H11v.909H9.974a4.002 4.002 0 01-3.52 3.52V11h-.909V9.974a4.002 4.002 0 01-3.52-3.52H1v-.909h1.026a4.002 4.002 0 013.52-3.52V1h.909zM6 3a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2z"
+            fill={highlightColor}
+          />
+        </svg>
       </g>
 
       {/* Hover highlight on any layer */}
