@@ -1310,6 +1310,16 @@ const LayerItem: React.FC<{
     if (isEditMode && !isEditing) {
       const originalOnClick = elementProps.onClick as ((e: React.MouseEvent) => void) | undefined;
       elementProps.onClick = (e: React.MouseEvent) => {
+        // Ignore keyboard-generated clicks (detail===0) when a text editor
+        // is active inside this element (e.g. Space on a <button> triggers
+        // native click activation which would steal focus from the editor)
+        if (e.detail === 0) {
+          const el = e.currentTarget as HTMLElement;
+          if (el?.querySelector?.('[contenteditable="true"]')) {
+            e.stopPropagation();
+            return;
+          }
+        }
         // Block click if locked by another user
         if (isLockedByOther) {
           e.stopPropagation();
